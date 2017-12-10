@@ -21,7 +21,7 @@ class Front_Wheels(object):
     _DEBUG = False
     _DEBUG_INFO = 'DEBUG "front_wheels.py":'
 
-    def __init__(self, debug=False, db="config", channel=FRONT_WHEEL_CHANNEL):
+    def __init__(self, debug=False, db="config", bus_number=1, channel=FRONT_WHEEL_CHANNEL):
         ''' setup channels and basic stuff '''
         self.db = filedb.fileDB(db=db)
         self._channel = channel
@@ -29,7 +29,7 @@ class Front_Wheels(object):
         self.turning_max = 20
         self._turning_offset = int(self.db.get('turning_offset', default_value=0))
 
-        self.wheel = Servo.Servo(self._channel, offset=self.turning_offset)
+        self.wheel = Servo.Servo(self._channel, bus_number=bus_number, offset=self.turning_offset)
         self.debug = debug
         if self._DEBUG:
             print (self._DEBUG_INFO, 'Front wheel PWM channel:', self._channel)
